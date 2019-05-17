@@ -39,7 +39,7 @@ registerDoParallel(cl)
 
 magicex <- read_cross2('MAGIC/magic_w8_dl.json')
 
-pr <- calc_genoprob(magicex, error_prob=0.002)
+pr <- calc_genoprob(magicex, error_prob=0.002, cores=2)
 apr <- genoprob_to_alleleprob(pr)
 k <- calc_kinship(apr, "loco")
 break
