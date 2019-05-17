@@ -40,11 +40,22 @@ registerDoParallel(cl)
 magicex <- read_cross2('MAGIC/magic_w8_dl.json')
 
 pr <- calc_genoprob(magicex, error_prob=0.002, cores=2)
+save(pr, file = 'pr.dat')
 apr <- genoprob_to_alleleprob(pr)
 k <- calc_kinship(apr, "loco")
 break
 
 
-out <- scan1(apr, magicex$pheno[,5])
-par(mar=c(4.1, 4.1, 0.6, 0.6))
-plot(out, magicex$gmap)
+pdf('plots.pdf')
+par(mfrow = c(4,2))
+for(i in 1:ncol(magicex$pheno)){
+  
+  out <- scan1(apr, magicex$pheno[,i])
+  plot(out, magicex$gmap, main = colnames(magicex$pheno)[i],
+       las = 2, altcol="green4", gap=0)
+  abline(h=3, col="red", lwd = 1.5, lty=2)
+  
+}
+dev.off()
+
+
